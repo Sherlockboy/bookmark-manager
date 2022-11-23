@@ -11,11 +11,15 @@ use Illuminate\Http\RedirectResponse;
 
 class StoreController extends Controller
 {
+    public function __construct(private CreateBookmarkAndTags $storeAction)
+    {
+    }
+    
     public function __invoke(StoreRequest $request): RedirectResponse 
     {
-        (new CreateBookmarkAndTags)->handle(
-            $request->validated(), 
-            auth()->id()
+        $this->storeAction->handle(
+            request: $request->validated(), 
+            userId: auth()->id()
         );
 
         return redirect()->route('dashboard');
