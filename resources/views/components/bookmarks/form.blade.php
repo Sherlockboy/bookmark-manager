@@ -116,6 +116,14 @@
                             {{ $bookmark->name }}
                         </p>
                         <div class="ml-2 flex-shrink-0 flex">
+                            <a
+                                href="{{ route('bookmarks.redirect', $bookmark->id) }}"
+                                target="__blank"
+                                rel="nofollow noopener"
+                                class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-indigo-600 bg-gray-100 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            >
+                                Visit
+                            </a>
                             <form method="post" action="{{ route('bookmarks.delete', $bookmark->id) }}">
                                 @csrf
                                 @method('DELETE')

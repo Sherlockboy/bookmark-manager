@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Bookmarks\DeleteController;
+use App\Http\Controllers\Bookmarks\RedirectController;
 use App\Http\Controllers\Bookmarks\StoreController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
@@ -29,6 +30,7 @@ Route::prefix('bookmarks')
     ->name('bookmarks.')
     ->middleware(['auth'])
     ->group(function () {
+        Route::get('/{bookmark}', RedirectController::class)->name('redirect');
         Route::post('/', StoreController::class)->name('store');
         Route::delete('/{bookmark}', DeleteController::class)->name('delete');
     });
