@@ -115,6 +115,15 @@
                         <p class="text-sm font-medium text-indigo-600 truncate">
                             {{ $bookmark->name }}
                         </p>
+                        <div class="ml-2 flex-shrink-0 flex">
+                            <form method="post" action="{{ route('bookmarks.delete', $bookmark->id) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-red-500 bg-gray-100 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
                     </div>
                     <div class="mt-2 sm:flex sm:justify-between">
                         <div class="flex space-x-4">

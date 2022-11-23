@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Bookmarks\DeleteController;
 use App\Http\Controllers\Bookmarks\StoreController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
@@ -24,14 +25,22 @@ Route::get('/dashboard', DashboardController::class)
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::post('/bookmarks', StoreController::class)
+Route::prefix('bookmarks')
+    ->name('bookmarks.')
     ->middleware(['auth'])
-    ->name('bookmarks.store');
+    ->group(function () {
+        Route::post('/', StoreController::class)->name('store');
+        Route::delete('/{bookmark}', DeleteController::class)->name('delete');
+    });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+Route::prefix('profile')
+    ->name('profile.')
+    ->middleware(['auth'])
+    ->controller(ProfileController::class)
+    ->group(function () {
+        Route::get('/', 'edit')->name('edit');
+        Route::patch('/', 'update')->name('update');
+        Route::delete('/', 'destroy')->name('destroy');
+    });
 
 require __DIR__ . '/auth.php';
